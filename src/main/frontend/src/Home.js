@@ -3,6 +3,7 @@ import axios from "axios";
 import {Link} from "react-router-dom";
 import {Button, Container, Table} from "react-bootstrap";
 import button from "bootstrap/js/src/button";
+import Bookmark from "./Bookmark";
 
 const Home = () => {
     const [username, setUsername] = useState("");
@@ -16,6 +17,13 @@ const Home = () => {
         window.location.reload();
     }
 
+    const Bookmark = () => {
+        if (localStorage.getItem("accessToken")) {
+            return (
+                <Link to={"/bookmark"}>북마크한 게시글 보기</Link>
+            )
+        }
+    }
     const Greeting = (username) => {
         if (username === "") {
             return (
@@ -48,7 +56,7 @@ const Home = () => {
     return (
         <Container style={{paddingTop: "20px", display: "flex", flexDirection: "column", alignItems: "center"}}>
             {Greeting(username)}
-            <Link to={"/bookmark"}>북마크한 게시글 보기</Link>
+            {Bookmark()}
             <h1>프로그래밍 게시판</h1>
             <Table striped bordered hover style={{minHeight: "450px"}}>
                 <thead>

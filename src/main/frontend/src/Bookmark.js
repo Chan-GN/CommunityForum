@@ -1,13 +1,18 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Button, Container, Table} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Bookmark = () => {
-    const [article, setArticle] = useState([]); // 연동 테스트용 state
+    const [article, setArticle] = useState([]);
+    const nav = useNavigate();
     let num = 1;
 
     useEffect(() => {
+        if (!localStorage.getItem("accessToken")) { // 로그인 정보(accessToken) 없을 시, Redirect 처리
+            alert("로그인이 필요합니다.");
+            nav("/");
+        }
         axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
         axios
             .get("/api/bookmark")
