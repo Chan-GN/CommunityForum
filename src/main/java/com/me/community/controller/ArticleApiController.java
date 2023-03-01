@@ -64,7 +64,7 @@ public class ArticleApiController {
      */
     @PostMapping("/api/articles")
     public ResponseEntity<Result<ArticleDto>> detail(@RequestBody ArticleDto dto, @AuthenticationPrincipal User user) {
-        ArticleDto articleDto = articleService.post(Long.valueOf(user.getUsername()), dto);
+        ArticleDto articleDto = articleService.create(Long.valueOf(user.getUsername()), dto);
 
         // Wrapper 클래스로 감싼 후,
         // ResponseEntity 의 body 에 담아 반환
@@ -102,9 +102,8 @@ public class ArticleApiController {
             @PathVariable("article-id") Long articleId,
             @AuthenticationPrincipal User user
     ) {
-        Long bookmarkId = bookmarkService.bookmark(articleId, Long.valueOf(user.getUsername()));
 
-        return bookmarkId;
+        return bookmarkService.bookmark(articleId, Long.valueOf(user.getUsername()));
     }
 
     /**
@@ -115,9 +114,8 @@ public class ArticleApiController {
             @PathVariable("article-id") Long articleId,
             @AuthenticationPrincipal User user
     ) {
-        Long removedId = bookmarkService.unBookmark(articleId, Long.valueOf(user.getUsername()));
 
-        return removedId;
+        return bookmarkService.unBookmark(articleId, Long.valueOf(user.getUsername()));
     }
 
     /**
@@ -162,9 +160,8 @@ public class ArticleApiController {
             @PathVariable("article-id") Long articleId,
             @AuthenticationPrincipal User user
     ) {
-        boolean check = bookmarkService.check(articleId, Long.valueOf(user.getUsername()));
 
-        return check;
+        return bookmarkService.check(articleId, Long.valueOf(user.getUsername()));
     }
 
     // 확장성을 위한 Wrapper 클래스

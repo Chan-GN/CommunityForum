@@ -24,13 +24,10 @@ public class Article extends AuditingFields {
     private Content content; // 내용
     private int hits; // 조회수
     private int bookmarkHits; // 북마크 횟수
-    private int report; // 신고 횟수
 
     @ManyToOne(fetch = FetchType.LAZY) // JPA 활용 시, XToOne 인 경우 fetch 타입을 LAZY 로 설정 !!!
     @JoinColumn(name = "user_id")
     private User user;
-
-    // private Image image; // 게시글 내부 이미지, 추후 개발
 
     // 생성 메소드
     public static Article createArticle(User user, ArticleDto dto) {
@@ -42,7 +39,6 @@ public class Article extends AuditingFields {
         article.setContent(dto.getContent());
         article.setHits(0);
         article.setBookmarkHits(0);
-        article.setReport(0);
 
         return article;
     }

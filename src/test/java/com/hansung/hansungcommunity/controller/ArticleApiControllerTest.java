@@ -23,19 +23,17 @@ class ArticleApiControllerTest {
     @Mock
     private ArticleService articleService;
 
-    private MockMvc mockMvc;
-
     @BeforeEach
     public void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(articleApiController).build();
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(articleApiController).build();
     }
 
     @Test
-    void postSuccess() throws Exception {
+    void postSuccess() {
         ArticleDto articleDto = new ArticleDto();
         articleDto.setId(1L);
         articleDto.setTitle("Test");
 
-        when(articleService.post(any(Long.class), any(ArticleDto.class))).thenReturn(articleDto);
+        when(articleService.create(any(Long.class), any(ArticleDto.class))).thenReturn(articleDto);
     }
 }

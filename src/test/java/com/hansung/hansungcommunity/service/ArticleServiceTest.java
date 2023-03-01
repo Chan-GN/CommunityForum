@@ -53,7 +53,7 @@ class ArticleServiceTest {
         ArticleService articleService = new ArticleService(articleRepository, userRepository, bookmarkRepository);
 
         // when
-        ArticleDto post = articleService.post(uid, articleDto);
+        ArticleDto post = articleService.create(uid, articleDto);
 
         // then
         assertEquals("제목", post.getTitle());

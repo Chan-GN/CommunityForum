@@ -16,9 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-
 @Service
 @RequiredArgsConstructor // 생성자 주입 (final 키워드)
 @Transactional(readOnly = true) // 읽기 전용
@@ -26,11 +23,12 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final UserRepository userRepository;
     private final BookmarkRepository bookmarkRepository;
+
     /**
      * 자유 게시글 게시
      */
     @Transactional // 필요 시 쓰기 전용
-    public ArticleDto post(Long userId, @Valid ArticleDto articleDto) {
+    public ArticleDto create(Long userId, @Valid ArticleDto articleDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글 게시 실패, 해당하는 유저가 없음"));
 
