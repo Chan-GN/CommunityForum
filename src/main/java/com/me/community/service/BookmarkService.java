@@ -36,7 +36,7 @@ public class BookmarkService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("북마크 실패, 해당하는 유저가 없음"));
 
-        Bookmark bookmark = new Bookmark(article, user);
+        Bookmark bookmark = Bookmark.createBookmark(article, user);
 
         Bookmark saved = bookmarkRepository.save(bookmark);
         return saved.getId();

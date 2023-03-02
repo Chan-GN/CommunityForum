@@ -1,7 +1,9 @@
 package com.me.community.entity;
 
 import com.me.community.dto.ArticleDto;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,8 +12,8 @@ import javax.validation.constraints.NotNull;
 
 @Table(name = "article")
 @Getter
-@Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,18 +31,23 @@ public class Article extends AuditingFields {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private Article(String title, Content content, int hits, int bookmarkHits, User user) {
+        this.title = title;
+        this.content = content;
+        this.hits = hits;
+        this.bookmarkHits = bookmarkHits;
+        this.user = user;
+    }
+
     // 생성 메소드
     public static Article createArticle(User user, ArticleDto dto) {
-        Article article = new Article();
-
-        article.setUser(user); // 연관관계 설정
-
-        article.setTitle(dto.getTitle());
-        article.setContent(dto.getContent());
-        article.setHits(0);
-        article.setBookmarkHits(0);
-
-        return article;
+        return new Article(
+                dto.getTitle(),
+                dto.getContent(),
+                0,
+                0,
+                user
+        );
     }
 
     // 연관관계 메소드
