@@ -25,7 +25,7 @@ public class ArticleResponseDto {
         this.content = article.getContent();
         this.hits = article.getHits();
         this.bookmarkHits = article.getBookmarkHits();
-        this.username = article.getUser().getName();
+        this.username = article.getMember().getName();
         this.postDate = article.getCreatedAt();
     }
 

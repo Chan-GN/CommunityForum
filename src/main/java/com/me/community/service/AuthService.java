@@ -1,14 +1,14 @@
 package com.me.community.service;
 
 import com.me.community.dto.MemberResponseDto;
+import com.me.community.entity.Member;
 import com.me.community.entity.RefreshToken;
 import com.me.community.repository.RefreshTokenRepository;
 import com.me.community.auth.TokenProvider;
 import com.me.community.dto.MemberRequestDto;
 import com.me.community.dto.TokenDto;
 import com.me.community.dto.TokenRequestDto;
-import com.me.community.entity.User;
-import com.me.community.repository.UserRepository;
+import com.me.community.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,19 +22,19 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class AuthService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
-        if (userRepository.existsByName(memberRequestDto.getName())) {
+        if (memberRepository.existsByName(memberRequestDto.getName())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
 
-        User user = memberRequestDto.toUser(passwordEncoder);
-        return MemberResponseDto.of(userRepository.save(user));
+        Member member = memberRequestDto.toUser(passwordEncoder);
+        return MemberResponseDto.of(memberRepository.save(member));
     }
 
     @Transactional

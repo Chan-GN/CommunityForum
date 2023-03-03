@@ -19,8 +19,8 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY) // JPA 활용 시, XToOne 인 경우 fetch 타입을 LAZY 로 설정 !!!
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id")
@@ -28,10 +28,10 @@ public class Comment {
     @Column
     private String body;
 
-    public static Comment createComment(User user, CommentDto dto, Article article) {
+    public static Comment createComment(Member member, CommentDto dto, Article article) {
         return new Comment(
                 dto.getId(),
-                user,
+                member,
                 article,
                 dto.getBody()
         );

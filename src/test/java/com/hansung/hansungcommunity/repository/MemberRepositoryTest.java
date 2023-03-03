@@ -1,7 +1,7 @@
 package com.hansung.hansungcommunity.repository;
 
-import com.me.community.entity.User;
-import com.me.community.repository.UserRepository;
+import com.me.community.entity.Member;
+import com.me.community.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -13,35 +13,35 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class UserRepositoryTest {
+class MemberRepositoryTest {
     @Autowired
-    private UserRepository userRepository;
+    private MemberRepository memberRepository;
 
     @Test
     public void save() {
-        User user = createUser();
+        Member member = createUser();
 
-        User savedUser = userRepository.save(user);
+        Member savedMember = memberRepository.save(member);
 
-        assertEquals("OCG", savedUser.getName());
+        assertEquals("OCG", savedMember.getName());
     }
 
     @Test
     public void findById() {
-        User user = createUser();
+        Member member = createUser();
 
-        userRepository.save(user);
+        memberRepository.save(member);
 
-        Optional<User> target = userRepository.findById(user.getId());
+        Optional<Member> target = memberRepository.findById(member.getId());
 
         assertEquals("OCG", target.get().getName());
     }
 
-    private User createUser() {
-        User user = new User();
-        user.setId(1L);
-        user.setName("OCG");
+    private Member createUser() {
+        Member member = new Member();
+        member.setId(1L);
+        member.setName("OCG");
 
-        return user;
+        return member;
     }
 }

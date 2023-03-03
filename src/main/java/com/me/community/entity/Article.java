@@ -4,7 +4,6 @@ import com.me.community.dto.ArticleDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,32 +27,32 @@ public class Article extends AuditingFields {
     private int bookmarkHits; // 북마크 횟수
 
     @ManyToOne(fetch = FetchType.LAZY) // JPA 활용 시, XToOne 인 경우 fetch 타입을 LAZY 로 설정 !!!
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    private Article(String title, Content content, int hits, int bookmarkHits, User user) {
+    private Article(String title, Content content, int hits, int bookmarkHits, Member member) {
         this.title = title;
         this.content = content;
         this.hits = hits;
         this.bookmarkHits = bookmarkHits;
-        this.user = user;
+        this.member = member;
     }
 
     // 생성 메소드
-    public static Article createArticle(User user, ArticleDto dto) {
+    public static Article createArticle(Member member, ArticleDto dto) {
         return new Article(
                 dto.getTitle(),
                 dto.getContent(),
                 0,
                 0,
-                user
+                member
         );
     }
 
     // 연관관계 메소드
-    public void setUser(User user) {
-        this.user = user;
-        user.getPostArticles().add(this); // 필요한가?
+    public void setMember(Member member) {
+        this.member = member;
+        member.getPostArticles().add(this); // 필요한가?
     }
 
     // 비즈니스 메소드

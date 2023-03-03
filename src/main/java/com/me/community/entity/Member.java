@@ -14,12 +14,12 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "user")
+@Table(name = "member")
 @NoArgsConstructor
-public class User {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "member_id")
     private Long id;
     private String name; // 이름
     private String password;
@@ -29,7 +29,7 @@ public class User {
     private String introduce; // 소개글
 
     // 일대다, 필요한가?
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "member")
     @JsonIgnore
     private List<Article> postArticles = new ArrayList<>();
 
@@ -37,7 +37,7 @@ public class User {
     private Authority authority;
 
     @Builder
-    public User(String name, String password, Authority authority) {
+    public Member(String name, String password, Authority authority) {
         this.name = name;
         this.password = password;
         this.authority = authority;

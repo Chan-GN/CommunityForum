@@ -4,10 +4,10 @@ import com.me.community.dto.ArticleDto;
 import com.me.community.dto.ArticleResponseDto;
 import com.me.community.entity.Article;
 import com.me.community.entity.Bookmark;
-import com.me.community.entity.User;
+import com.me.community.entity.Member;
 import com.me.community.repository.ArticleRepository;
 import com.me.community.repository.BookmarkRepository;
-import com.me.community.repository.UserRepository;
+import com.me.community.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true) // 읽기 전용
 public class ArticleService {
     private final ArticleRepository articleRepository;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final BookmarkRepository bookmarkRepository;
 
     /**
      * 자유 게시글 게시
      */
     @Transactional // 필요 시 쓰기 전용
-    public ArticleDto create(Long userId, @Valid ArticleDto articleDto) {
-        User user = userRepository.findById(userId)
+    public ArticleDto create(Long memberId, @Valid ArticleDto articleDto) {
+        Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글 게시 실패, 해당하는 유저가 없음"));
 
-        Article article = Article.createArticle(user, articleDto); // 게시글 생성
+        Article article = Article.createArticle(member, articleDto); // 게시글 생성
 
         Article savedArticle = articleRepository.save(article); // DB에 저장
 

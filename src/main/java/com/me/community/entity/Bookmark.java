@@ -17,19 +17,19 @@ public class Bookmark {
     @JoinColumn(name = "article_id")
     private Article article;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "member_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private Member member;
 
-    private Bookmark(Article article, User user) {
+    private Bookmark(Article article, Member member) {
         this.article = article;
-        this.user = user;
+        this.member = member;
     }
 
-    public static Bookmark createBookmark(Article article, User user) {
+    public static Bookmark createBookmark(Article article, Member member) {
         return new Bookmark(
                 article,
-                user
+                member
         );
     }
 }

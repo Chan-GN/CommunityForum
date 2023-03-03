@@ -1,7 +1,7 @@
 package com.me.community.dto;
 
 import com.me.community.auth.Authority;
-import com.me.community.entity.User;
+import com.me.community.entity.Member;
 import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,8 +14,8 @@ public class MemberRequestDto {
     private String name;
     private String password;
 
-    public User toUser(PasswordEncoder passwordEncoder) {
-        return User.builder()
+    public Member toUser(PasswordEncoder passwordEncoder) {
+        return Member.builder()
                 .name(name)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)

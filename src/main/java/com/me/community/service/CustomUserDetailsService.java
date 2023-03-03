@@ -1,10 +1,11 @@
 package com.me.community.service;
 
-import com.me.community.entity.User;
-import com.me.community.repository.UserRepository;
+import com.me.community.entity.Member;
+import com.me.community.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,22 +16,22 @@ import java.util.Collections;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByName(username)
+        return memberRepository.findByName(username)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found !!!"));
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
-    private UserDetails createUserDetails(User user) {
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getAuthority().toString());
+    private UserDetails createUserDetails(Member member) {
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
 
-        return new org.springframework.security.core.userdetails.User(
-                String.valueOf(user.getId()),
-                user.getPassword(),
+        return new User(
+                String.valueOf(member.getId()),
+                member.getPassword(),
                 Collections.singleton(grantedAuthority)
         );
     }

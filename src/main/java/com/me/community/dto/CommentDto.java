@@ -16,6 +16,6 @@ public class CommentDto {
     private String username;
 
     public static CommentDto createCommentDto(Comment comment) {
-        return new CommentDto(comment.getId(), comment.getArticle().getId(), comment.getBody(), comment.getUser().getName());
+        return new CommentDto(comment.getId(), comment.getArticle().getId(), comment.getBody(), comment.getMember().getName());
     }
 }

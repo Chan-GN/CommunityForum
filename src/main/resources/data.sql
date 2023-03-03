@@ -1,8 +1,8 @@
-INSERT INTO user (user_id, name, nickname, point, career, introduce)
+INSERT INTO member (member_id, name, nickname, point, career, introduce)
 VALUES (100, 'USER1', 'NICK1', 0, '', ''),
        (101, 'USER2', 'NICK2', 0, '', '');
 
-INSERT INTO article (article_id, title, article, bookmark_hits, hits, user_id, created_at, code)
+INSERT INTO article (article_id, title, article, bookmark_hits, hits, member_id, created_at, code)
 VALUES (100, 'Test title 1', 'Test content 1', 0, 0, 100, '2023-02-01 23:05:28.010856', 'int main() { <br>System.out.println("hello World");<br>}'),
        (101, 'Test title 2', 'Test content 2', 0, 0, 100, '2023-02-02 23:05:28.010856', 'int main() { System.out.println("hello World"); }'),
        (102, 'Test title 3', 'Test content 3', 0, 0, 101, '2023-02-03 23:05:28.010856', 'int main() { System.out.println("hello World"); }'),

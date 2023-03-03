@@ -1,7 +1,7 @@
 package com.me.community.dto;
 
 
-import com.me.community.entity.User;
+import com.me.community.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class MemberResponseDto {
     private String name;
 
-    public static MemberResponseDto of(User user) {
-        return new MemberResponseDto(user.getName());
+    public static MemberResponseDto of(Member member) {
+        return new MemberResponseDto(member.getName());
     }
 }
