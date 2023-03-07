@@ -16,16 +16,14 @@ import java.util.List;
 @Setter
 @Table(name = "member")
 @NoArgsConstructor
-public class Member {
+public class Member extends ModifiedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
     private String name; // 이름
     private String password;
-    private int point; // 포인트
     private String nickname; // 닉네임
-    private String career; // 경력
     private String introduce; // 소개글
 
     // 일대다, 필요한가?

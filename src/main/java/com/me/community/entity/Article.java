@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Article extends AuditingFields {
+public class Article extends ModifiedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")
@@ -62,6 +62,8 @@ public class Article extends AuditingFields {
 
         if (dto.getContent() != null)
             this.content = dto.getContent();
+
+        modified();
     }
 
     public void increaseHits() {
