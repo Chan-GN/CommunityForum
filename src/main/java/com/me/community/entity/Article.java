@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Article extends ModifiedEntity {
+public class Article extends AuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "article_id")

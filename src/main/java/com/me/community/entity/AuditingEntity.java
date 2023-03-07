@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-public class ModifiedEntity extends AuditingFields {
+public class AuditingEntity extends AuditingFields {
 
     // 수정 일자
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)

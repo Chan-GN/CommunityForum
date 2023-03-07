@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @Table(name = "member")
 @NoArgsConstructor
-public class Member extends ModifiedEntity {
+public class Member extends AuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
@@ -35,9 +35,11 @@ public class Member extends ModifiedEntity {
     private Authority authority;
 
     @Builder
-    public Member(String name, String password, Authority authority) {
+    public Member(String name, String password, Authority authority, String nickname, String introduce) {
         this.name = name;
         this.password = password;
         this.authority = authority;
+        this.nickname = nickname;
+        this.introduce = introduce;
     }
 }
