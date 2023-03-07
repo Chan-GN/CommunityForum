@@ -8,6 +8,7 @@ import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import axios from "axios";
 import Bookmark from "./Bookmark";
+import MyPage from "./MyPage";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/login" element={<LoginForm/>}></Route>
                 <Route path="/signup" element={<SignUpForm/>}></Route>
                 <Route path="/bookmark" element={<Bookmark/>}></Route>
+                <Route path="/my-page" element={<MyPage/>}></Route>
             </Routes>
         </BrowserRouter>
     );

@@ -36,6 +36,7 @@ const Home = () => {
                     <button
                         onClick={handleLogoutBtn}
                     >로그아웃</button>
+                    <Link to={"/my-page"}>마이페이지</Link>
                 </>
     );
 
@@ -50,7 +51,27 @@ const Home = () => {
         axios
             .get("/api/me")
             .then((res) => setUsername(res.data.name))
-            .catch((err) => console.log(err));
+            .catch(async (err) => {
+                if (err.response.status === 401) {
+                    axios
+                        .post("/api/auth/reissue", {
+                            accessToken: localStorage.getItem("accessToken"),
+                            refreshToken: localStorage.getItem("refreshToken")
+                        }).then(response => {
+                        localStorage.setItem('accessToken', response.data.accessToken)
+                        localStorage.setItem('refreshToken', response.data.refreshToken)
+                        localStorage.setItem('accessTokenExpiresIn', response.data.accessTokenExpiresIn);
+                        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.accessToken}`;
+                    }).then(
+                        await axios
+                            .get("/api/me")
+                            .then((res) => setUsername(res.data.name))
+                            .catch((err) => {
+                                console.log(err);
+                            })
+                    );
+                }
+            })
     }, []);
 
     return (
