@@ -13,12 +13,16 @@ public class MemberRequestDto {
 
     private String name;
     private String password;
+    private String nickname;
+    private String introduce;
 
     public Member toUser(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .name(name)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)
+                .nickname(nickname)
+                .introduce(introduce)
                 .build();
     }
 

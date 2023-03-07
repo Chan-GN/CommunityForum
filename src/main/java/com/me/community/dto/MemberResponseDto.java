@@ -11,8 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberResponseDto {
     private String name;
+    private String nickname;
+    private String introduce;
 
     public static MemberResponseDto of(Member member) {
-        return new MemberResponseDto(member.getName());
+        return new MemberResponseDto(
+                member.getName(),
+                member.getNickname(),
+                member.getIntroduce()
+        );
     }
 }
