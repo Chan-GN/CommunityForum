@@ -43,35 +43,16 @@ const Home = () => {
     }
 
     useEffect(() => {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
         axios
             .get("/api/articles")
             .then((response) => setArticle(response.data.data))
             .catch((error) => console.log(error));
-        axios
-            .get("/api/me")
-            .then((res) => setUsername(res.data.name))
-            .catch(async (err) => {
-                if (err.response.status === 401) {
-                    axios
-                        .post("/api/auth/reissue", {
-                            accessToken: localStorage.getItem("accessToken"),
-                            refreshToken: localStorage.getItem("refreshToken")
-                        }).then(response => {
-                        localStorage.setItem('accessToken', response.data.accessToken)
-                        localStorage.setItem('refreshToken', response.data.refreshToken)
-                        localStorage.setItem('accessTokenExpiresIn', response.data.accessTokenExpiresIn);
-                        axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.accessToken}`;
-                    }).then(
-                        await axios
-                            .get("/api/me")
-                            .then((res) => setUsername(res.data.name))
-                            .catch((err) => {
-                                console.log(err);
-                            })
-                    );
-                }
-            })
+        if (localStorage.getItem("accessToken")) {
+            axios
+                .get("/api/me")
+                .then((res) => setUsername(res.data.name))
+                .catch((err) => console.log(err));
+        }
     }, []);
 
     return (

@@ -11,7 +11,6 @@ const Article = () => {
     const [bookmark, setBookmark] = useState(false);
 
     useEffect(() => {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("accessToken")}`;
         axios
             .get(`/api/articles/${id}`)
             .then((response) => {

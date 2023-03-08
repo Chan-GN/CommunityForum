@@ -23,9 +23,6 @@ const LoginForm = () => {
             localStorage.setItem('accessToken', response.data.accessToken)
             localStorage.setItem('refreshToken', response.data.refreshToken)
             localStorage.setItem('accessTokenExpiresIn', response.data.accessTokenExpiresIn);
-            axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.accessToken}`;
-            console.log('writeBoard/response: ', response);
-            console.log('writeBoard/response.status: ', response.status);
             navigate("/", {});
         } catch (err) {
             console.log('CreateBoard/handleInput/err: ', err);

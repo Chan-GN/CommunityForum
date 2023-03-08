@@ -23,9 +23,7 @@ const ArticleForm = () => {
             let response = await axios({
                 method: 'post',
                 url: '/api/articles',
-                headers: {'Content-Type': 'application/json',
-                    'Authorization' : `Bearer ${localStorage.getItem("accessToken")}}`
-                },
+                headers: {'Content-Type': 'application/json'},
                 data: JSON.stringify(request_data)
             });
             console.log('writeBoard/response: ', response);
