@@ -1,9 +1,9 @@
 package com.me.community.service;
 
 import com.me.community.dto.ArticleDto;
+import com.me.community.dto.ArticleListResponseDto;
 import com.me.community.dto.ArticleResponseDto;
 import com.me.community.entity.Article;
-import com.me.community.entity.Bookmark;
 import com.me.community.entity.Member;
 import com.me.community.repository.ArticleRepository;
 import com.me.community.repository.BookmarkRepository;
@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 public class ArticleService {
     private final ArticleRepository articleRepository;
     private final MemberRepository memberRepository;
-    private final BookmarkRepository bookmarkRepository;
 
     /**
      * 자유 게시글 게시
@@ -71,11 +70,11 @@ public class ArticleService {
      * 게시글 리스트 조회
      * 정렬 후 반환
      */
-    public List<ArticleResponseDto> findAll() {
+    public List<ArticleListResponseDto> findAll() {
         List<Article> list = articleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
 
         return list.stream()
-                .map(ArticleResponseDto::new)
+                .map(ArticleListResponseDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -86,11 +85,7 @@ public class ArticleService {
         Article article = articleRepository.findById(articleId)
                 .orElseThrow(() -> new IllegalArgumentException("게시글 조회 실패, 해당하는 게시글이 없음"));
 
-        List<Bookmark> bookmarks = bookmarkRepository.findAllByArticleId(articleId);
-        ArticleResponseDto resDto = new ArticleResponseDto(article);
-        resDto.setBookmarkHits(bookmarks.size());
-
-        return resDto;
+        return new ArticleResponseDto(article);
     }
 
     /**

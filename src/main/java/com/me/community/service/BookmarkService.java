@@ -1,9 +1,9 @@
 package com.me.community.service;
 
+import com.me.community.dto.ArticleListResponseDto;
 import com.me.community.entity.Bookmark;
 import com.me.community.entity.Member;
 import com.me.community.repository.BookmarkRepository;
-import com.me.community.dto.ArticleResponseDto;
 import com.me.community.entity.Article;
 import com.me.community.repository.ArticleRepository;
 import com.me.community.repository.MemberRepository;
@@ -64,17 +64,10 @@ public class BookmarkService {
     /**
      * 북마크한 게시글
      */
-    public List<ArticleResponseDto> findBookmarkArticle(Long userId) {
-        List<Bookmark> bookmarks = bookmarkRepository.findAllByMemberId(userId)
-                .orElseThrow(() -> new IllegalArgumentException("북마크 게시글 조회 실패, 북마크한 게시글이 없습니다."));
+    public List<ArticleListResponseDto> findBookmarkArticle(Long userId) {
+        List<Article> articles = articleRepository.findAllWithBookmark(userId);
 
-        List<Article> articles = bookmarks.stream()
-                .map(bookmark -> articleRepository.findById(bookmark.getArticle().getId())
-                        .orElseThrow(() -> new IllegalArgumentException("북마크 게시글 조회 실패, 해당하는 게시글이 없습니다.")))
-                .collect(Collectors.toList());
-
-        return articles.stream().map(ArticleResponseDto::new).collect(Collectors.toList());
-
+        return articles.stream().map(ArticleListResponseDto::new).collect(Collectors.toList());
     }
 
 }

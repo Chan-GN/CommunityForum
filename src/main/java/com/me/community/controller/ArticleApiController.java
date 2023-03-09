@@ -1,5 +1,6 @@
 package com.me.community.controller;
 
+import com.me.community.dto.ArticleListResponseDto;
 import com.me.community.dto.ArticleResponseDto;
 import com.me.community.service.BookmarkService;
 import com.me.community.dto.ArticleDto;
@@ -36,8 +37,8 @@ public class ArticleApiController {
      * 작성 시간으로 정렬
      */
     @GetMapping("/api/articles")
-    public ResponseEntity<Result<List<ArticleResponseDto>>> list() {
-        List<ArticleResponseDto> dtoList = articleService.findAll();
+    public ResponseEntity<Result<List<ArticleListResponseDto>>> list() {
+        List<ArticleListResponseDto> dtoList = articleService.findAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(new Result<>(dtoList));
     }
@@ -122,8 +123,8 @@ public class ArticleApiController {
      * 북마크한 게시글 조회
      */
     @GetMapping("/api/bookmark")
-    public ResponseEntity<List<ArticleResponseDto>> bookmarks(@AuthenticationPrincipal User user) {
-        List<ArticleResponseDto> bookmarkArticles = bookmarkService.findBookmarkArticle(Long.valueOf(user.getUsername()));
+    public ResponseEntity<List<ArticleListResponseDto>> bookmarks(@AuthenticationPrincipal User user) {
+        List<ArticleListResponseDto> bookmarkArticles = bookmarkService.findBookmarkArticle(Long.valueOf(user.getUsername()));
 
         return ResponseEntity.status(HttpStatus.OK).body(bookmarkArticles);
     }

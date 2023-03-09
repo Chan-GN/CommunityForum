@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Table(name = "article")
@@ -24,17 +26,18 @@ public class Article extends AuditingEntity {
     @AttributeOverride(name = "article", column = @Column(nullable = false))
     private Content content; // 내용
     private int hits; // 조회수
-    private int bookmarkHits; // 북마크 횟수
 
     @ManyToOne(fetch = FetchType.LAZY) // JPA 활용 시, XToOne 인 경우 fetch 타입을 LAZY 로 설정 !!!
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Article(String title, Content content, int hits, int bookmarkHits, Member member) {
+    @OneToMany(mappedBy = "article", orphanRemoval = true)
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
+    private Article(String title, Content content, int hits, Member member) {
         this.title = title;
         this.content = content;
         this.hits = hits;
-        this.bookmarkHits = bookmarkHits;
         this.member = member;
     }
 
@@ -43,7 +46,6 @@ public class Article extends AuditingEntity {
         return new Article(
                 dto.getTitle(),
                 dto.getContent(),
-                0,
                 0,
                 member
         );
